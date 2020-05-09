@@ -11,12 +11,13 @@ const UserDetailsCard = memo(({id, name, items, address, pincode, active, onHove
   },[active, eventName]);
 
   const handleHover = ()=>{
-    if(!active){
+    console.log('eventName', eventName);
+    if(eventName!=='key' && !active){
       onHover(index);
     }
   }
   return(
-  <div className={`p-3 border w-100 user-card ${active?'active':''}`} ref={cardRef} onMouseEnter={handleHover}>
+  <div className={`p-3 border w-100 user-card ${active?'active':''}`} ref={cardRef} onMouseOver={handleHover}>
     <div className="mb-3">
       {id}
     </div>

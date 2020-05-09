@@ -13,26 +13,18 @@ class Search extends PureComponent {
       open:false
     };
     this.container_ref = React.createRef();
+    this.timeOut = null;
   }
 
   static defaultProps={
     children:()=><></>
   }
 
-  handleClickOutside = event => {
-    if (this.container_ref.current && !this.container_ref.current.contains(event.target)) {
-      this.setState({
-        open: false,
-      });
-    }
+  handleBlur = event => {
+    this.setState({
+      open: false,
+    });
   };
-
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
 
   handleChange=({target:{value}})=>{
     const {options, searchBy} = this.props;
@@ -71,17 +63,28 @@ class Search extends PureComponent {
         cursor: prevState.cursor + 1,
         eventName:'key'
       }))
-    }
+    };
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(()=>{
+      this.setState(prevState => ({
+        eventName:'hover'
+      }))
+    }, 500);
   }
   setCursor = (index)=>{
-    console.log(index);
-    console.log('setCursor', index);
     this.setState( prevState => ({
       ...prevState,
       cursor: index,
       eventName:'hover'
     }))
   }
+  handleFocus = ()=>{
+    this.setState((prevState)=>({
+      ...prevState,
+      open:prevState.query.length>0
+    }))
+  }
+
   render() {
     const {placeholder, children} = this.props;
     const {searchResult, query, cursor, eventName, open} = this.state;
@@ -89,7 +92,14 @@ class Search extends PureComponent {
       <div className="search">
         <div className="row">
           <div className="col-12">
-            <Input placeholder={placeholder} onChange={this.handleChange} value={query} onKeyDown={this.handleKeyDown}/>
+            <Input
+            placeholder={placeholder}
+            onChange={this.handleChange}
+            value={query}
+            onKeyDown={this.handleKeyDown}
+            onFocus={this.handleFocus}
+            onBlur = {this.handleBlur}
+            />
           </div>
           {
             open &&
