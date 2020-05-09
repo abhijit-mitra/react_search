@@ -14,6 +14,7 @@ const Home = memo((props) => {
     };
     callApi();
   },[]);
+
   return(
   <div className="home">
     <Search
@@ -21,8 +22,15 @@ const Home = memo((props) => {
       placeholder={'Search users by ID, address, name, ...'}
       options={users}
     >
-      {(searchResult)=>{
-        return searchResult.map(elm=><UserDetailsCard key={elm.id} {...elm }/>)
+      {(searchResult, cursor, setCursor, eventName)=>{
+        return searchResult.map((elm, index)=>
+        <UserDetailsCard
+          key={elm.id}
+          active={cursor===index}
+          onHover={setCursor}
+          index={index}
+          eventName={eventName}
+          {...elm } />)
       }}
     </Search>
 

@@ -1,18 +1,37 @@
 import React, { PureComponent } from 'react';
 
-import {Input} from '../../atoms/';
+import {Input, NoDataView} from '../../atoms/';
 
 class Search extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       query:'',
-      searchResult:[]
+      searchResult:[],
+      cursor: 0,
+      eventName: 'hover',
+      open:false
     };
+    this.container_ref = React.createRef();
   }
 
   static defaultProps={
     children:()=><></>
+  }
+
+  handleClickOutside = event => {
+    if (this.container_ref.current && !this.container_ref.current.contains(event.target)) {
+      this.setState({
+        open: false,
+      });
+    }
+  };
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   handleChange=({target:{value}})=>{
@@ -34,25 +53,58 @@ class Search extends PureComponent {
       };
       return false;
     })
-    this.setState({query: value, searchResult});
+    this.setState({query: value, searchResult, cursor:0, open: value.length>0});
+  }
+
+  handleKeyDown =(e)=>{
+    const { cursor, searchResult } = this.state
+    // arrow up/down button should select next/previous list element
+    if (e.keyCode === 38 && cursor > 0) {
+      this.setState( prevState => ({
+        ...prevState,
+        cursor: prevState.cursor - 1,
+        eventName:'key'
+      }))
+    } else if (e.keyCode === 40 && cursor < searchResult.length - 1) {
+      this.setState( prevState => ({
+        ...prevState,
+        cursor: prevState.cursor + 1,
+        eventName:'key'
+      }))
+    }
+  }
+  setCursor = (index)=>{
+    console.log(index);
+    console.log('setCursor', index);
+    this.setState( prevState => ({
+      ...prevState,
+      cursor: index,
+      eventName:'hover'
+    }))
   }
   render() {
     const {placeholder, children} = this.props;
-    const {searchResult, query} = this.state;
+    const {searchResult, query, cursor, eventName, open} = this.state;
     return (
       <div className="search">
         <div className="row">
           <div className="col-12">
-            <Input placeholder={placeholder} onChange={this.handleChange} value={query}/>
+            <Input placeholder={placeholder} onChange={this.handleChange} value={query} onKeyDown={this.handleKeyDown}/>
           </div>
-          <div className="col-12">
-            {
-              searchResult.length>0 && query.length>0 &&
-              <div className="overflow-auto border" style={{height:'400px'}}>
-                {children(searchResult)}
-              </div>
-            }
-          </div>
+          {
+            open &&
+            <div className="col-12" ref={this.container_ref}>
+              {
+                searchResult.length>0 ?
+                <div className="overflow-auto border" style={{'maxHeight':'400px'}}>
+                  {children(searchResult, cursor, this.setCursor, eventName)}
+                </div>:
+                <div className="w-100 border" style={{'height':'400px'}}>
+                  <NoDataView msg={'No Result found'}/>
+                </div>
+              }
+            </div>
+          }
         </div>
       </div>
     );

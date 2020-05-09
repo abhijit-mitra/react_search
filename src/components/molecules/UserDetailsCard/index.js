@@ -1,7 +1,22 @@
-import React from 'react';
+import React,{memo, useEffect, useRef} from 'react';
 
-const UserDetailsCard = ({id, name, items, address, pincode}) => (
-  <div className="p-3 border w-100">
+import './style.css';
+
+const UserDetailsCard = memo(({id, name, items, address, pincode, active, onHover, index, eventName}) => {
+  const cardRef = useRef()
+  useEffect(()=>{
+    if(eventName!=='hover' && active){
+      cardRef.current.scrollIntoView({behavior: "smooth"});
+    }
+  },[active, eventName]);
+
+  const handleHover = ()=>{
+    if(!active){
+      onHover(index);
+    }
+  }
+  return(
+  <div className={`p-3 border w-100 user-card ${active?'active':''}`} ref={cardRef} onMouseEnter={handleHover}>
     <div className="mb-3">
       {id}
     </div>
@@ -12,6 +27,6 @@ const UserDetailsCard = ({id, name, items, address, pincode}) => (
       {address}
     </div>
   </div>
-);
+)});
 
 export default UserDetailsCard;

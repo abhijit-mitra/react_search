@@ -1,0 +1,12 @@
+.user-card{
+  background-color: #fff;
+  font-weight: bold;
+}
+
+.active{
+  background-color: #f5f2f2 !important;
+}
+
+/* .user-card:hover{
+  background-color: #f5f2f2;
+} */
