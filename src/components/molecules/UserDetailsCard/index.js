@@ -24,8 +24,11 @@ const UserDetailsCard = memo(({id, name, items, address, pincode, active, onHove
     <div className="mb-3">
       {name}
     </div>
-    <div>
+    <div className="mb-3">
       {address}
+    </div>
+    <div>
+      {pincode}
     </div>
   </div>
 )});
