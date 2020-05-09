@@ -11,7 +11,6 @@ const UserDetailsCard = memo(({id, name, items, address, pincode, active, onHove
   },[active, eventName]);
 
   const handleHover = ()=>{
-    console.log('eventName', eventName);
     if(eventName!=='key' && !active){
       onHover(index);
     }
