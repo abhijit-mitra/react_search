@@ -110,7 +110,7 @@ class Search extends PureComponent {
                   {children(searchResult, cursor, this.setCursor, eventName)}
                 </div>:
                 <div className="w-100 border" style={{'height':'400px'}}>
-                  <NoDataView msg={'No Result found'}/>
+                  <NoDataView msg={'No User found'}/>
                 </div>
               }
             </div>
