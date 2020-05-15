@@ -85,7 +85,8 @@ class Search extends PureComponent {
   handleFocus = ()=>{
     this.setState((prevState)=>({
       ...prevState,
-      open:prevState.query.length>0
+      open:prevState.query.length>0,
+      cursor:0
     }))
   }
 
