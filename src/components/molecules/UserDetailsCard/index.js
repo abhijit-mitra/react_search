@@ -37,13 +37,13 @@ const UserDetailsCard = memo(({id, name, items, address, pincode, active, onHove
   }
   return(
   <div className={`p-3 border w-100 user-card ${active?'active':''}`} ref={cardRef} onMouseOver={handleHover}>
-    <div className="mb-3">
+    <div className="mb-1">
       {getHighlightedText(id, query)}
     </div>
-    <div className="mb-3">
+    <div className="mb-1">
       {getHighlightedText(name, query)}
     </div>
-    <div className="mb-3">
+    <div className="mb-1">
       <span className="items">
         {
           items.map((elm, index)=>(
@@ -54,7 +54,7 @@ const UserDetailsCard = memo(({id, name, items, address, pincode, active, onHove
         }
       </span>
     </div>
-    <div className="mb-3">
+    <div className="mb-1">
       {getHighlightedText(address, query)}
     </div>
     <div>
