@@ -2,6 +2,10 @@ import React, { PureComponent } from 'react';
 
 import {Input, NoDataView} from '../../atoms/';
 
+const SearchResultStyle ={
+  'maxHeight':'400px'
+}
+
 class Search extends PureComponent {
   constructor(props) {
     super(props);
@@ -55,13 +59,13 @@ class Search extends PureComponent {
       this.setState( prevState => ({
         ...prevState,
         cursor: prevState.cursor - 1,
-        eventName:'key'
+        eventName:'keyUp'
       }))
     } else if (e.keyCode === 40 && cursor < searchResult.length - 1) {
       this.setState( prevState => ({
         ...prevState,
         cursor: prevState.cursor + 1,
-        eventName:'key'
+        eventName:'keyDown'
       }))
     };
     clearTimeout(this.timeout);
@@ -106,7 +110,7 @@ class Search extends PureComponent {
             <div className="col-12" ref={this.container_ref}>
               {
                 searchResult.length>0 ?
-                <div className="overflow-auto border" style={{'maxHeight':'400px'}}>
+                <div className="overflow-auto border" style={SearchResultStyle}>
                   {children(searchResult, cursor, this.setCursor, eventName)}
                 </div>:
                 <div className="w-100 border" style={{'height':'400px'}}>

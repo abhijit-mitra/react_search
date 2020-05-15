@@ -6,12 +6,13 @@ const UserDetailsCard = memo(({id, name, items, address, pincode, active, onHove
   const cardRef = useRef()
   useEffect(()=>{
     if(eventName!=='hover' && active){
-      cardRef.current.scrollIntoView({behavior: "smooth"});
+      const block = eventName ==='keyUp'? 'start':'end';
+      cardRef.current.scrollIntoView({block,behavior: "smooth"});
     }
   },[active, eventName]);
 
   const handleHover = ()=>{
-    if(eventName!=='key' && !active){
+    if(!eventName.includes('key') && !active){
       onHover(index);
     }
   }
