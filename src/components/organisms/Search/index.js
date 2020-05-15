@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import {Input, NoDataView} from '../../atoms/';
 
 const SearchResultStyle ={
-  'maxHeight':'350px'
+  'maxHeight':'400px'
 }
 
 class Search extends PureComponent {
@@ -113,7 +113,7 @@ class Search extends PureComponent {
                 <div className="overflow-auto border" style={SearchResultStyle}>
                   {children(searchResult, cursor, this.setCursor, eventName, query)}
                 </div>:
-                <div className="w-100 border" style={{'height':'350px'}}>
+                <div className="w-100 border" style={{'height':'400px'}}>
                   <NoDataView msg={'No User found'}/>
                 </div>
               }
