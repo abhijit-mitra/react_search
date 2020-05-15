@@ -43,17 +43,12 @@ const UserDetailsCard = memo(({id, name, items, address, pincode, active, onHove
     <div className="mb-1">
       {getHighlightedText(name, query)}
     </div>
-    <div className="mb-1">
-      <span className="items">
-        {
-          items.map((elm, index)=>(
-            <span key={index} className='mr-2'>
+    {items.map((elm, index)=>(
+            <div className="mb-1">
               {getHighlightedText(elm, query)}
-            </span>
-          ))
-        }
-      </span>
-    </div>
+            </div>
+    ))
+    }
     <div className="mb-1">
       {getHighlightedText(address, query)}
     </div>
