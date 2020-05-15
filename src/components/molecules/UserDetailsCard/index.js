@@ -7,6 +7,10 @@ const getHighlightedText = (value, query)=>{
   const sizeOfQuery = query.length;
   const sizeOfValue = value.length;
   const fromIndex = value.toLowerCase().indexOf(query.toLowerCase());
+  if(fromIndex === -1){
+    return value;
+  }
+
   const toIndex = fromIndex+sizeOfQuery;
   return (
     <>
@@ -19,7 +23,6 @@ const getHighlightedText = (value, query)=>{
 
 const UserDetailsCard = memo(({id, name, items, address, pincode, active, onHover, index, eventName, query}) => {
   const cardRef = useRef();
-  const sizeOfItems = items.length;
   useEffect(()=>{
     if(eventName!=='hover' && active){
       const block = eventName ==='keyUp'? 'start':'end';
