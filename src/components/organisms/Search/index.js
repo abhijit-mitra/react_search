@@ -102,7 +102,7 @@ class Search extends PureComponent {
             value={query}
             onKeyDown={this.handleKeyDown}
             onFocus={this.handleFocus}
-            //onBlur = {this.handleBlur}
+            onBlur = {this.handleBlur}
             />
           </div>
           {
