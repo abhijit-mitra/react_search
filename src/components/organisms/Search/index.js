@@ -111,7 +111,7 @@ class Search extends PureComponent {
               {
                 searchResult.length>0 ?
                 <div className="overflow-auto border" style={SearchResultStyle}>
-                  {children(searchResult, cursor, this.setCursor, eventName)}
+                  {children(searchResult, cursor, this.setCursor, eventName, query)}
                 </div>:
                 <div className="w-100 border" style={{'height':'400px'}}>
                   <NoDataView msg={'No User found'}/>

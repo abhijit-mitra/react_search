@@ -22,7 +22,7 @@ const Home = memo((props) => {
       placeholder={'Search users by ID, address, name, ...'}
       options={users}
     >
-      {(searchResult, cursor, setCursor, eventName)=>{
+      {(searchResult, cursor, setCursor, eventName, query)=>{
         return searchResult.map((elm, index)=>
         <UserDetailsCard
           key={elm.id}
@@ -30,6 +30,7 @@ const Home = memo((props) => {
           onHover={setCursor}
           index={index}
           eventName={eventName}
+          query={query}
           {...elm } />)
       }}
     </Search>
